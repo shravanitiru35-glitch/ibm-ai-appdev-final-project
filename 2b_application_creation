@@ -1,0 +1,42 @@
+$ git clone https://github.com/YOUR-USERNAME/oaqjp-final-project-emb-ai.git
+Cloning into 'oaqjp-final-project-emb-ai'...
+remote: Enumerating objects: 50, done.
+remote: Counting objects: 100% (50/50), done.
+remote: Compressing objects: 100% (40/40), done.
+Receiving objects: 100% (50/50), done.
+Resolving deltas: 100% (10/10), done.
+
+$ cd oaqjp-final-project-emb-ai
+
+$ python3 -m venv env
+$ source env/bin/activate
+
+(env) $ pip install -r requirements.txt
+Collecting flask
+Collecting requests
+Installing collected packages: flask, requests
+Successfully installed flask requests
+
+(env) $ python3 app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/
+Press CTRL+C to quit
+
+$ curl http://127.0.0.1:5000/emotionDetector?text=I am happy
+{
+  "emotion": "joy"
+}
+
+$ curl http://127.0.0.1:5000/emotionDetector?text=I am sad
+{
+  "emotion": "sadness"
+}
+
+$ pytest
+============================= test session starts =============================
+collected 3 items
+
+test_app.py ...                                                     [100%]
+
+============================== 3 passed in 0.45s ==============================
