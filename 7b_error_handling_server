@@ -1,0 +1,39 @@
+from flask import Flask, request
+from EmotionDetection.emotion_detection import emotion_detector
+
+app = Flask(__name__)
+
+@app.route("/emotionDetector", methods=["GET"])
+def emotion_analysis():
+    text_to_analyze = request.args.get("text")
+
+    # ❌ REQUIRED: Handle blank input error
+    if text_to_analyze is None or text_to_analyze.strip() == "":
+        return {
+            "error": "Blank input provided. Please enter valid text."
+        }
+
+    # Call emotion detection function
+    result = emotion_detector(text_to_analyze)
+
+    # Extract values
+    anger = result.get("anger")
+    disgust = result.get("disgust")
+    fear = result.get("fear")
+    joy = result.get("joy")
+    sadness = result.get("sadness")
+    dominant_emotion = result.get("dominant_emotion")
+
+    # Return formatted response
+    return {
+        "anger": anger,
+        "disgust": disgust,
+        "fear": fear,
+        "joy": joy,
+        "sadness": sadness,
+        "dominant_emotion": dominant_emotion
+    }
+
+# Run server
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
