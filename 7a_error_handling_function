@@ -1,0 +1,49 @@
+import requests
+
+def emotion_detector(text_to_analyze):
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/YOUR-API/emotion"
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "text": text_to_analyze
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+
+    # ✅ SUCCESS RESPONSE
+    if response.status_code == 200:
+        response_json = response.json()
+
+        emotions = response_json['emotion']['document']['emotion']
+
+        anger = emotions.get('anger', None)
+        disgust = emotions.get('disgust', None)
+        fear = emotions.get('fear', None)
+        joy = emotions.get('joy', None)
+        sadness = emotions.get('sadness', None)
+
+        dominant_emotion = max(emotions, key=emotions.get)
+
+        return {
+            "anger": anger,
+            "disgust": disgust,
+            "fear": fear,
+            "joy": joy,
+            "sadness": sadness,
+            "dominant_emotion": dominant_emotion
+        }
+
+    # ❌ ERROR HANDLING FOR 400 STATUS CODE (REQUIRED)
+    elif response.status_code == 400:
+        return {
+            "error": "Bad Request: The input provided is invalid (Status Code 400)"
+        }
+
+    # ❌ OTHER ERRORS
+    else:
+        return {
+            "error": f"Unexpected error occurred. Status Code: {response.status_code}"
+        }
