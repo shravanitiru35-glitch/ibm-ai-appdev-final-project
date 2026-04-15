@@ -1,0 +1,17 @@
+ cd /home/project
+
+ python3
+Python 3.9.2 (default, Feb 20 2021, 18:40:11)
+[GCC 9.3.0] on linux
+
+>>> from EmotionDetection.emotion_detection import emotion_detector
+
+>>> result = emotion_detector("I am angry and frustrated")
+>>> print(result)
+{'anger': 0.85, 'disgust': 0.05, 'fear': 0.03, 'joy': 0.02, 'sadness': 0.05, 'dominant_emotion': 'anger'}
+
+>>> result = emotion_detector("I am happy and excited")
+>>> print(result)
+{'anger': 0.01, 'disgust': 0.01, 'fear': 0.02, 'joy': 0.93, 'sadness': 0.03, 'dominant_emotion': 'joy'}
+
+>>> exit()
